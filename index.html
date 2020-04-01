@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>智能插座测试</title>
+    </head>
+    <script>
+        var xmlHttp = null;
+
+        function SwitchOn(ip, port, id)
+        {
+            if (ip == null || ip == undefined || ip == '')
+                window.alert('服务器地址为空');
+
+            if (port == null || port == undefined || port == '')
+                window.alert('服务器端口为空');
+
+            if (id == null || id == undefined || id == '')
+                window.alert('插座ID为空');
+
+            while (id.length < 16)
+                id = "0" + id;
+
+            if (id.length > 16)
+                id = id.substring(0, 16);
+
+            document.getElementById("device_id").value = id;
+
+            var url = "http://" + ip + ":" + port + "/Control?device=" + id + "&channel=1&control=on";
+
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", url, true);
+            xmlHttp.send( null );
+        }
+
+        function SwitchOff(ip, port, id)
+        {
+            if (ip == null || ip == undefined || ip == '')
+                window.alert('服务器地址为空');
+
+            if (port == null || port == undefined || port == '')
+                window.alert('服务器端口为空');
+
+            if (id == null || id == undefined || id == '')
+                window.alert('插座ID为空');
+
+            while (id.length < 16)
+                id = "0" + id;
+
+            if (id.length > 16)
+                id = id.substring(0, 16);
+
+            document.getElementById("device_id").value = id;
+
+            var url = "http://" + ip + ":" + port + "/Control?device=" + id + "&channel=1&control=off";
+
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", url, true);
+            xmlHttp.send( null );
+        }
+    </script>
+    <body>
+        <table>
+            <tr>
+                <td>服务器地址：</td>
+                <td><input type="text" value="47.106.20.70" id="server_addr"/></td>
+            </tr>
+            <tr>
+                <td>服务器端口：</td>
+                <td><input type="text" value="8089" id="server_port"/></td>
+            </tr>
+            <tr>
+                <td>插座ID：</td>
+                <td><input type="text" id="device_id"/></td>
+            </tr>
+            <tr>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" value="打开" onclick="SwitchOn(document.getElementById('server_addr').value, document.getElementById('server_port').value, document.getElementById('device_id').value);"/>
+                    &nbsp;&nbsp;
+                    <input type="button" value="关闭" onclick="SwitchOff(document.getElementById('server_addr').value, document.getElementById('server_port').value, document.getElementById('device_id').value);"/>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+
